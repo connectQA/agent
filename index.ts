@@ -1,6 +1,9 @@
 import { Tunnel } from "./src/utils/tunnel-ssh";
 import express from "express";
+import * as dotenv from "dotenv";
+import { uuid } from "./src/utils/uuid";
 
+dotenv.config();
 const app = express();
 app.use(express.json());
 
@@ -12,9 +15,10 @@ app.get("/get", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  console.log(req.body.java);
+  const id = uuid();
   res.json({
-    hello: "world",
+    id,
+    apiKey: process.env.API_KEY,
   });
 });
 

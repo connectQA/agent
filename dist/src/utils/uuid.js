@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const uuid_1 = require("uuid");
 /**
  * A method to build unique identifiers.
  * @returns UUID string.
  */
 function uuid() {
-    return ("" + 1e7 + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid);
+    return (0, uuid_1.v4)();
 }
 exports.default = uuid;
