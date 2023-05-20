@@ -1,12 +1,17 @@
-import { Tunnel } from "./src/utils/tunnel-ssh";
+import { Tunnel } from "./src/tunnel/tunnel-ssh";
 import express from "express";
-import * as dotenv from "dotenv";
 import { uuid } from "./src/utils/uuid";
+import { TunnelResponse } from "./src/types/tunnel.type";
+import { decrypt, encrypt } from "./src/utils/crypto";
+import { config } from "./env.config";
 
-dotenv.config();
+// Config
 const app = express();
+
+// Middlewares
 app.use(express.json());
 
+// Routes
 app.get("/get", (req, res) => {
   console.log(req.body);
   res.json({
@@ -18,16 +23,24 @@ app.post("/", (req, res) => {
   const id = uuid();
   res.json({
     id,
-    apiKey: process.env.API_KEY,
+    apiKey: config.API_KEY,
+    encrypted: decrypt(req.body.java),
   });
 });
 
-const test = new Tunnel(3000);
+// Process
+const instance = new Tunnel(config.PORT);
 
-const exec = async () => {
-  const tunnel = await test.createTunnel();
-  console.log(tunnel.url);
+const exec = async (tunnel: Tunnel): Promise<TunnelResponse> => {
+  const { url, port } = await tunnel.createTunnel();
+  console.log(url);
+  return {
+    url,
+    port,
+  };
 };
 
-exec();
-app.listen(3000);
+exec(instance);
+
+// Server
+app.listen(config.PORT);
