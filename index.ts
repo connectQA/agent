@@ -1,12 +1,14 @@
 import { Tunnel } from "./src/tunnel/tunnel-ssh";
 import express from "express";
 import { uuid } from "./src/utils/uuid";
-import { TunnelResponse } from "./src/types/tunnel.type";
+import { TunnelResponse } from "./src/types/tunnel";
 import { decrypt, encrypt } from "./src/utils/crypto";
 import { config } from "./env.config";
+import { Database } from "./src/data/handlers/database";
 
 // Config
 const app = express();
+const db = new Database();
 
 // Middlewares
 app.use(express.json());
@@ -34,6 +36,7 @@ const instance = new Tunnel(config.PORT);
 const exec = async (tunnel: Tunnel): Promise<TunnelResponse> => {
   const { url, port } = await tunnel.createTunnel();
   console.log(url);
+  await db.createAgent(url);
   return {
     url,
     port,

@@ -1,5 +1,5 @@
 import localtunnel from "localtunnel";
-import { TunnelResponse } from "../types/tunnel.type";
+import { TunnelResponse } from "../types/tunnel";
 
 export class Tunnel {
   private readonly _port: number;

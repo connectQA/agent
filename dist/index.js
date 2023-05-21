@@ -17,8 +17,10 @@ const express_1 = __importDefault(require("express"));
 const uuid_1 = require("./src/utils/uuid");
 const crypto_1 = require("./src/utils/crypto");
 const env_config_1 = require("./env.config");
+const database_1 = require("./src/data/handlers/database");
 // Config
 const app = (0, express_1.default)();
+const db = new database_1.Database();
 // Middlewares
 app.use(express_1.default.json());
 // Routes
@@ -41,6 +43,7 @@ const instance = new tunnel_ssh_1.Tunnel(env_config_1.config.PORT);
 const exec = (tunnel) => __awaiter(void 0, void 0, void 0, function* () {
     const { url, port } = yield tunnel.createTunnel();
     console.log(url);
+    yield db.createAgent(url);
     return {
         url,
         port,
