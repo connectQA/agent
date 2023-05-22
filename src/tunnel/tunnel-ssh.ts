@@ -23,4 +23,8 @@ export class Tunnel {
       port: this._port,
     };
   }
+
+  public closeTunnel(tunnel: localtunnel.Tunnel) {
+    return tunnel.close();
+  }
 }

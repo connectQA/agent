@@ -17,14 +17,14 @@ const encryptionIV = crypto
   .digest("hex")
   .substring(0, 16);
 
-export function encrypt(data: string) {
+export function encrypt(data: string): string {
   const cipher = crypto.createCipheriv("aes-256-cbc", key, encryptionIV);
   return Buffer.from(
     cipher.update(data, "utf8", "hex") + cipher.final("hex")
   ).toString("base64");
 }
 
-export function decrypt(data: string) {
+export function decrypt(data: string): string {
   const buff = Buffer.from(data, "base64");
   const decipher = crypto.createDecipheriv("aes-256-cbc", key, encryptionIV);
   return (

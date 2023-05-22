@@ -1,10 +1,9 @@
 import { Tunnel } from "./src/tunnel/tunnel-ssh";
 import express from "express";
-import { uuid } from "./src/utils/uuid";
 import { TunnelResponse } from "./src/types/tunnel";
-import { decrypt, encrypt } from "./src/utils/crypto";
 import { config } from "./env.config";
 import { Database } from "./src/data/handlers/database";
+import { routesProvider } from "./src/www/routes/routes";
 
 // Config
 const app = express();
@@ -14,21 +13,7 @@ const db = new Database();
 app.use(express.json());
 
 // Routes
-app.get("/get", (req, res) => {
-  console.log(req.body);
-  res.json({
-    hello: "world",
-  });
-});
-
-app.post("/", (req, res) => {
-  const id = uuid();
-  res.json({
-    id,
-    apiKey: config.API_KEY,
-    encrypted: decrypt(req.body.java),
-  });
-});
+routesProvider(app);
 
 // Process
 const instance = new Tunnel(config.PORT);

@@ -14,30 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const tunnel_ssh_1 = require("./src/tunnel/tunnel-ssh");
 const express_1 = __importDefault(require("express"));
-const uuid_1 = require("./src/utils/uuid");
-const crypto_1 = require("./src/utils/crypto");
 const env_config_1 = require("./env.config");
 const database_1 = require("./src/data/handlers/database");
+const routes_1 = require("./src/www/routes/routes");
 // Config
 const app = (0, express_1.default)();
 const db = new database_1.Database();
 // Middlewares
 app.use(express_1.default.json());
 // Routes
-app.get("/get", (req, res) => {
-    console.log(req.body);
-    res.json({
-        hello: "world",
-    });
-});
-app.post("/", (req, res) => {
-    const id = (0, uuid_1.uuid)();
-    res.json({
-        id,
-        apiKey: env_config_1.config.API_KEY,
-        encrypted: (0, crypto_1.decrypt)(req.body.java),
-    });
-});
+(0, routes_1.routesProvider)(app);
 // Process
 const instance = new tunnel_ssh_1.Tunnel(env_config_1.config.PORT);
 const exec = (tunnel) => __awaiter(void 0, void 0, void 0, function* () {

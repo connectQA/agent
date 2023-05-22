@@ -1,1 +1,3 @@
-// HTTP request to server when falling
+// HTTPs requests
+
+export class ConnectQARequest {}
