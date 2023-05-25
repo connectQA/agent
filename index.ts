@@ -1,13 +1,16 @@
-import { Tunnel } from "./src/tunnel/tunnel-ssh";
 import express from "express";
-import { TunnelResponse } from "./src/types/tunnel";
-import { config } from "./env.config";
-import { Database } from "./src/data/handlers/database";
+import { runInstance } from "./src/run/run";
+import { config } from "./connectqa.config";
+import { Tunnel } from "./src/tunnel/tunnel-ssh";
 import { routesProvider } from "./src/www/routes/routes";
+import { Log } from "./src/utils/logger";
+import { ConnectQARequest } from "./src/utils/http";
 
 // Config
 const app = express();
-const db = new Database();
+const proc = new Tunnel(config.PORT);
+const _logger = new Log();
+const http = new ConnectQARequest();
 
 // Middlewares
 app.use(express.json());
@@ -16,19 +19,10 @@ app.use(express.json());
 routesProvider(app);
 
 // Process
-const instance = new Tunnel(config.PORT);
-
-const exec = async (tunnel: Tunnel): Promise<TunnelResponse> => {
-  const { url, port } = await tunnel.createTunnel();
-  console.log(url);
-  await db.createAgent(url);
-  return {
-    url,
-    port,
-  };
-};
-
-exec(instance);
+runInstance(proc);
+http.validatingApiKey();
 
 // Server
-app.listen(config.PORT);
+app.listen(config.PORT, () => {
+  _logger.info("Configuring listeners for incoming tests...");
+});

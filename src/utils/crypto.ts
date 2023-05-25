@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { config } from "../../env.config";
+import { config } from "../../connectqa.config";
 
 if (!config.SECRET_KEY) {
   throw new Error("Secret key is required.");
