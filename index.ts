@@ -1,5 +1,5 @@
 import express from "express";
-import { runInstance } from "./src/run/run";
+import { runInstance } from "./src/tunnel/run-instance";
 import { config } from "./connectqa.config";
 import { Tunnel } from "./src/tunnel/tunnel-ssh";
 import { routesProvider } from "./src/www/routes/routes";
