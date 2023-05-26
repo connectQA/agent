@@ -1,6 +1,6 @@
-import { LogInterface } from "../types/logger";
+import { ConnectQALogger } from "../types/logger";
 
-export class Log implements LogInterface {
+export class Log implements ConnectQALogger {
   public info(msg: string): void {
     console.log(`${this.getFormattedUTCDate()}: INFO: ${msg}`);
   }

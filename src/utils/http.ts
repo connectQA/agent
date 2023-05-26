@@ -3,8 +3,9 @@ import { config } from "../../connectqa.config";
 import { Log } from "./logger";
 import { ConnectQAError } from "./connectQA-error";
 import { ErrorCode } from "../types/error";
+import { HTTPHandler } from "../types/http";
 
-export class ConnectQARequest {
+export class ConnectQAHTTP implements HTTPHandler {
   private readonly _connectQAServer: string;
   private readonly _logger: Log = new Log();
 
@@ -20,7 +21,7 @@ export class ConnectQARequest {
     this._connectQAServer = config.CONNECTQA_SERVER;
   }
 
-  public async validatingApiKey(): Promise<boolean> {
+  public async validateApiKey(): Promise<boolean> {
     const result = await axios.post(`${this._connectQAServer}/validate`, {
       key: config.API_KEY,
     });

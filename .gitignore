@@ -1,6 +1,8 @@
 node_modules/
 /test-results/
+/test-examples/
 /playwright-report/
 /playwright/.cache/
 dist/
 .env
+tests/

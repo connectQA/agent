@@ -1,6 +1,6 @@
 import { Application } from "express";
-import { executionController } from "../controllers/exec-controller";
+import { goController } from "../controllers/go-controller";
 
 export function routesProvider(app: Application) {
-  app.post("/exec", executionController().exec);
+  app.post("/go", goController().go);
 }

@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { uuid } from "../../utils/uuid";
 import { config } from "../../../connectqa.config";
 
-export function executionController() {
+export function goController() {
   return {
-    exec(req: Request, res: Response) {
+    go(req: Request, res: Response) {
       const id = uuid();
       res.json({
         id,

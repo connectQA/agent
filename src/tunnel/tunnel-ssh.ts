@@ -1,8 +1,8 @@
 import localtunnel from "localtunnel";
-import { TunnelResponse } from "../types/tunnel";
+import { ConnectQATunnel, TunnelResponse } from "../types/tunnel";
 import { Log } from "../utils/logger";
 
-export class Tunnel {
+export class Tunnel implements ConnectQATunnel {
   private readonly _port: number;
   private readonly _logger: Log = new Log();
 
@@ -27,7 +27,7 @@ export class Tunnel {
     };
   }
 
-  public closeTunnel(tunnel: localtunnel.Tunnel) {
-    return tunnel.close();
+  public closeTunnel(tunnel: localtunnel.Tunnel): void {
+    tunnel.close();
   }
 }
