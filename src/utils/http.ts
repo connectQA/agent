@@ -1,6 +1,8 @@
 import axios from "axios";
 import { config } from "../../connectqa.config";
 import { Log } from "./logger";
+import { ConnectQAError } from "./connectQA-error";
+import { ErrorCode } from "../types/error";
 
 export class ConnectQARequest {
   private readonly _connectQAServer: string;
@@ -8,7 +10,12 @@ export class ConnectQARequest {
 
   constructor() {
     if (!config.CONNECTQA_SERVER) {
-      throw new Error("The server stablished for Connect QA is undefined.");
+      throw new ConnectQAError({
+        code: ErrorCode.UNDEFINED_SERVER,
+        params: {
+          server: config.CONNECTQA_SERVER,
+        },
+      });
     }
     this._connectQAServer = config.CONNECTQA_SERVER;
   }
@@ -22,6 +29,11 @@ export class ConnectQARequest {
       return true;
     }
     this._logger.error("The provided API key was invalid.");
-    return false;
+    throw new ConnectQAError({
+      code: ErrorCode.INVALID_API_KEY,
+      params: {
+        apiKey: config.API_KEY,
+      },
+    });
   }
 }

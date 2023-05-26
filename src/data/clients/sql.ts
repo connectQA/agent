@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import { config } from "../../../connectqa.config";
 
-export default new Sequelize(config.DB_KEY, {
+export default new Sequelize(config.DB_KEY!, {
   dialectOptions: {
     ssl: {
       require: true,

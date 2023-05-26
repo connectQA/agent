@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { uuid } from "../../../utils/uuid";
-import { config } from "../../../../connectqa.config";
+import { uuid } from "../../utils/uuid";
+import { config } from "../../../connectqa.config";
 
 export function executionController() {
   return {
