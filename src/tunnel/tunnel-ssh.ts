@@ -31,3 +31,8 @@ export class Tunnel implements ConnectQATunnel {
     tunnel.close();
   }
 }
+
+export async function runInstance(tunnel: Tunnel): Promise<void> {
+  const { url } = await tunnel.createTunnel();
+  console.log(url);
+}

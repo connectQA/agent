@@ -1,10 +1,10 @@
 import express from "express";
-import { runInstance } from "./src/tunnel/run-instance";
 import { config } from "./connectqa.config";
-import { Tunnel } from "./src/tunnel/tunnel-ssh";
+import { Tunnel, runInstance } from "./src/tunnel/tunnel-ssh";
 import { routesProvider } from "./src/www/routes/routes";
 import { Log } from "./src/utils/logger";
 import { ConnectQAHTTP } from "./src/utils/http";
+import { tmpPathExistsOrCreate } from "./src/utils/folder";
 
 // Config
 const app = express();
@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 routesProvider(app);
 
 // Process
+tmpPathExistsOrCreate();
 runInstance(proc);
 
 // Server

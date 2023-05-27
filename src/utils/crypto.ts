@@ -34,19 +34,6 @@ export class EncryptionHelper implements CryptoHelper {
     ).toString("base64");
   }
 
-  public decrypt(data: string): string {
-    const buff = Buffer.from(data, "base64");
-    const decipher = crypto.createDecipheriv(
-      "aes-256-cbc",
-      this._key,
-      this._encryptionIV
-    );
-    return (
-      decipher.update(buff.toString("utf8"), "hex", "utf8") +
-      decipher.final("utf8")
-    );
-  }
-
   private generateCryptoKey(): string {
     return crypto
       .createHash("sha512")

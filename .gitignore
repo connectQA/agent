@@ -2,5 +2,7 @@ node_modules/
 /playwright-report/
 /playwright/.cache/
 /dist/
-.env
+/out/
 /tmp/
+.env
+.todo

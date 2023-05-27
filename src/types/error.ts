@@ -2,7 +2,8 @@ export type ErrorParams =
   | InvalidApiKeyError
   | SecretKeyNotFoundError
   | UndefinedServerError
-  | FileNotReceivedError;
+  | FileNotReceivedError
+  | FileNotFoundError;
 
 export interface BaseError<T, V> {
   code: T;
@@ -24,6 +25,12 @@ export type UndefinedServerError = BaseError<
   { server: string | undefined }
 >;
 
+export type FileNotFoundError = BaseError<
+  ErrorCode.FILE_NOT_FOUND,
+  {
+    dir: string;
+  }
+>;
 export type FileNotReceivedError = BaseError<ErrorCode.FILE_NOT_RECEIVED, {}>;
 
 export type FileNotSavedError = BaseError<ErrorCode.FILE_NOT_SAVED, {}>;
@@ -34,4 +41,5 @@ export enum ErrorCode {
   INVALID_API_KEY = "The provided API key was invalid. Make sure this value corresponds to your API key from your profile.",
   FILE_NOT_RECEIVED = "No file received.",
   FILE_NOT_SAVED = "Internal error. The file could not be saved.",
+  FILE_NOT_FOUND = "File could not be found for further deletion process.",
 }
