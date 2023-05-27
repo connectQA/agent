@@ -4,8 +4,7 @@
   "description": "The Connect QA runner agent.",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
-    "build": "tsc",
+    "start": "tsc && node ./dist/index.js",
     "exec": "npx playwright test index.spec.ts --project=chromium --headed"
   },
   "repository": {

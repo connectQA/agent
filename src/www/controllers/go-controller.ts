@@ -1,11 +1,11 @@
 import fs from "fs";
-import path from "path";
 import { Request, Response } from "express";
-import { uuid } from "../../utils/uuid";
-import { config } from "../../../connectqa.config";
-import { ConnectQAError } from "../../utils/connectQA-error";
+import { Log } from "../../utils/logger";
 import { ErrorCode } from "../../types/error";
 import { ConnectQAWorker } from "../../worker/worker";
+import { ConnectQAError } from "../../utils/connectQA-error";
+
+const logger = new Log();
 
 export function goController() {
   const worker = new ConnectQAWorker();
@@ -24,6 +24,7 @@ export function goController() {
             params: {},
           });
         }
+        logger.clear();
         const response = await worker.executeCode();
         res.json({
           response,
