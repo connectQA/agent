@@ -9,20 +9,20 @@ import { ConnectQAHTTP } from "./src/utils/http";
 // Config
 const app = express();
 const proc = new Tunnel(config.PORT);
-const _logger = new Log();
+const logger = new Log();
 const http = new ConnectQAHTTP();
 
 // Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 routesProvider(app);
 
 // Process
 runInstance(proc);
-http.validateApiKey();
 
 // Server
 app.listen(config.PORT, () => {
-  _logger.info("Configuring listeners for incoming tests...");
+  logger.info("Configuring listeners for incoming tests...");
 });

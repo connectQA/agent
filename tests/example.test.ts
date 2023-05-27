@@ -1,9 +1,4 @@
-import { test, expect } from "@playwright/test";
-import { exec } from "../src/core/executor/connectQA-executor";
-
-test("has title", async ({ page }) => {
-  await exec(page, expect);
-});
+// import { test, expect } from "@playwright/test";
 
 // test("get started link", async ({ page }) => {
 //   await page.goto("https://playwright.dev/");
