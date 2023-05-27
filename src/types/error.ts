@@ -3,7 +3,8 @@ export type ErrorParams =
   | SecretKeyNotFoundError
   | UndefinedServerError
   | FileNotReceivedError
-  | FileNotFoundError;
+  | FileNotFoundError
+  | UnknownError;
 
 export interface BaseError<T, V> {
   code: T;
@@ -31,6 +32,14 @@ export type FileNotFoundError = BaseError<
     dir: string;
   }
 >;
+
+export type UnknownError = BaseError<
+  ErrorCode.UNKNOWN_ERROR,
+  {
+    error: unknown;
+  }
+>;
+
 export type FileNotReceivedError = BaseError<ErrorCode.FILE_NOT_RECEIVED, {}>;
 
 export type FileNotSavedError = BaseError<ErrorCode.FILE_NOT_SAVED, {}>;
@@ -42,4 +51,5 @@ export enum ErrorCode {
   FILE_NOT_RECEIVED = "No file received.",
   FILE_NOT_SAVED = "Internal error. The file could not be saved.",
   FILE_NOT_FOUND = "File could not be found for further deletion process.",
+  UNKNOWN_ERROR = "Something went wrong.",
 }

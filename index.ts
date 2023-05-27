@@ -4,7 +4,7 @@ import { Tunnel, runInstance } from "./src/tunnel/tunnel-ssh";
 import { routesProvider } from "./src/www/routes/routes";
 import { Log } from "./src/utils/logger";
 import { ConnectQAHTTP } from "./src/utils/http";
-import { tmpPathExistsOrCreate } from "./src/utils/folder";
+import { pathExistsOrCreate } from "./src/utils/folder";
 
 // Config
 const app = express();
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 routesProvider(app);
 
 // Process
-tmpPathExistsOrCreate();
+pathExistsOrCreate("tmp");
 runInstance(proc);
 
 // Server

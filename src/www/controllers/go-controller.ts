@@ -5,8 +5,6 @@ import { ErrorCode } from "../../types/error";
 import { ConnectQAWorker } from "../../worker/worker";
 import { ConnectQAError } from "../../utils/connectQA-error";
 
-const logger = new Log();
-
 export function goController() {
   const worker = new ConnectQAWorker();
   return {
@@ -24,13 +22,17 @@ export function goController() {
             params: {},
           });
         }
-        logger.clear();
         const response = await worker.executeCode();
         res.json({
           response,
         });
       } catch (error) {
-        console.error(error);
+        throw new ConnectQAError({
+          code: ErrorCode.UNKNOWN_ERROR,
+          params: {
+            error,
+          },
+        });
       }
     },
   };

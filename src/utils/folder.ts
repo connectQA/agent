@@ -1,8 +1,7 @@
 import fs from "fs";
 
-export function tmpPathExistsOrCreate(): void {
-  const _dir = "tmp";
-  if (!fs.existsSync(_dir)) {
-    fs.mkdirSync(_dir);
+export function pathExistsOrCreate(dir: string): void {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
   }
 }
