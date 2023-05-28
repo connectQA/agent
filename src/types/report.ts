@@ -1,9 +1,5 @@
-export interface ConnectQAReport {
-  processPlaywrightReport(): Result;
-  send(): Promise<boolean>;
-}
+import fs from "fs";
 
-export type Result = {
-  id: string;
-  result: string;
-};
+export interface ConnectQAReport {
+  getPlaywrightReportAsString(): Buffer;
+}

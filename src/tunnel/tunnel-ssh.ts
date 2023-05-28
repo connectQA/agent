@@ -14,14 +14,16 @@ export class Tunnel implements ConnectQATunnel {
   }
 
   public async createTunnel(): Promise<TunnelResponse> {
-    const tunnel: localtunnel.Tunnel = await localtunnel({ port: this._port });
+    const tunnel: localtunnel.Tunnel = await localtunnel({
+      port: this._port,
+    });
     tunnel.on("request", (info) => {
       _logger.info(`${info}`);
-      console.log("executing requests");
     });
-    tunnel.on("error", (err) => {
+    tunnel.on("error", async (err) => {
       _logger.error(`${err}`);
-      console.log("Connection failed. It can be handled here.");
+      _logger.error(`Reconnecting...`);
+      this.retry();
     });
     tunnel.on("close", (info) => {
       _logger.info(`${info}`);
@@ -33,6 +35,10 @@ export class Tunnel implements ConnectQATunnel {
 
   public closeTunnel(tunnel: localtunnel.Tunnel): void {
     tunnel.close();
+  }
+
+  private async retry(): Promise<void> {
+    await runInstance(this);
   }
 }
 

@@ -21,7 +21,6 @@ export class Log implements ConnectQALogger {
   public error(msg: string): void {
     console.log(`${this.getFormattedUTCDate()}: ERROR: ${msg}`);
     this._logger.write(`${this.getFormattedUTCDate()}: ERROR: ${msg}\n`);
-    throw new Error();
   }
 
   public clear(): void {

@@ -13,13 +13,13 @@ export class ConnectQAWorker implements Worker {
     return multer({ storage: this.getStorage() });
   }
 
-  public async executeCode(): Promise<any> {
+  public async executeCode(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       exec("npm run exec", (error, stdout) => {
         if (error) {
-          reject(error);
+          reject(false);
         } else {
-          resolve(stdout);
+          resolve(true);
           this.removeFileAfterExecution();
         }
       });

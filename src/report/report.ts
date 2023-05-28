@@ -1,17 +1,15 @@
-import { ConnectQAReport, Result } from "../types/report";
+import fs from "fs";
+import path from "path";
+import { ConnectQAReport } from "../types/report";
 
 export class Report implements ConnectQAReport {
-  public processPlaywrightReport(): Result {
-    // TODO
-    return {
-      id: "",
-      result: "",
-    };
+  private readonly _reportPath: string;
+
+  constructor() {
+    this._reportPath = path.join("out", "results.json");
   }
-  public async send(): Promise<boolean> {
-    // TODO
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
+
+  public getPlaywrightReportAsString(): Buffer {
+    return fs.readFileSync(this._reportPath);
   }
 }
