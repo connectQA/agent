@@ -1,14 +1,12 @@
 import fs from "fs";
-import path from "path";
 import { Request, Response } from "express";
 import { ErrorCode } from "../../types/error";
 import { ConnectQAWorker } from "../../worker/worker";
 import { ConnectQAError } from "../../utils/connectQA-error";
 import { Report } from "../../report/report";
+import { ConnectQAAgentResponse } from "../../types/response";
 
 export function goController() {
-  const reportPath: string = path.join("playwright-report", "results.json");
-
   const worker = new ConnectQAWorker();
   const report = new Report();
   return {
@@ -27,9 +25,17 @@ export function goController() {
           });
         }
         if (await worker.executeCode()) {
-          const result: any = report.getPlaywrightReportAsString();
+          const testResult: any = report.getPlaywrightReportAsString();
+          const result: ConnectQAAgentResponse = {
+            result: JSON.parse(testResult),
+            logs: report.getLogsAsString(),
+            datetime: new Date()
+              .toISOString()
+              .replace(/T/, " ")
+              .replace(/\..+/, ""),
+          };
           res.json({
-            result: JSON.parse(result),
+            result,
           });
         } else {
           res.status(500).send();

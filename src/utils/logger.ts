@@ -4,27 +4,36 @@ import path from "path";
 import { pathExistsOrCreate } from "./folder";
 
 export class Log implements ConnectQALogger {
-  private readonly _logger: fs.WriteStream;
+  private readonly _writer: fs.WriteStream;
   private readonly _pathToLogFile: string;
+  private _logger: string = "";
 
   constructor() {
     pathExistsOrCreate("logs");
     this._pathToLogFile = path.join("logs", "/process.log");
-    this._logger = this.logger();
+    this._writer = this.logger();
   }
 
-  public info(msg: string): void {
-    console.log(`${this.getFormattedUTCDate()}: INFO: ${msg}`);
-    this._logger.write(`${this.getFormattedUTCDate()}: INFO: ${msg}\n`);
+  public info(msg: string, save: boolean): void {
+    this._logger = `${this.getFormattedUTCDate()}: INFO: ${msg}`;
+    console.log(this._logger);
+    if (save) this._writer.write(`${this._logger}\n`);
   }
 
   public error(msg: string): void {
-    console.log(`${this.getFormattedUTCDate()}: ERROR: ${msg}`);
-    this._logger.write(`${this.getFormattedUTCDate()}: ERROR: ${msg}\n`);
+    this._logger = `${this.getFormattedUTCDate()}: ERROR: ${msg}`;
+    console.log(this._logger);
+    this._writer.write(`${this.logger}\n`);
   }
 
   public clear(): void {
+    this._logger = "";
     fs.writeFile(this._pathToLogFile, "", () => {});
+  }
+
+  public fromLogToJSON(): unknown {
+    // TODO
+    return;
   }
 
   private getFormattedUTCDate(): string {
