@@ -10,11 +10,11 @@ export class ConnectQAHTTP implements HTTPHandler {
   private readonly _logger: Log = new Log();
 
   constructor() {
-    if (!config.CONNECTQA_SERVER) {
+    if (!config.API_KEY) {
       throw new ConnectQAError({
-        code: ErrorCode.UNDEFINED_SERVER,
+        code: ErrorCode.UNDEFINED_API_KEY,
         params: {
-          server: config.CONNECTQA_SERVER,
+          apiKey: config.API_KEY,
         },
       });
     }
@@ -26,7 +26,7 @@ export class ConnectQAHTTP implements HTTPHandler {
       key: config.API_KEY,
     });
     if (result.data === true) {
-      this._logger.info("The provided API key is valid.");
+      this._logger.info("The provided API key is valid.", false);
       return true;
     }
     this._logger.error("The provided API key was invalid.");

@@ -6,4 +6,4 @@ Run it as a Docker container.
 ## Architecture
 
 This schematic represents the two basic flows that the ConnectQA agent deals with.
-![Architecture](docs/images/arch.png)
+![Architecture](static/arch.png)

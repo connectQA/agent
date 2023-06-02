@@ -8,7 +8,7 @@ import { pathExistsOrCreate } from "./src/utils/folder";
 
 // Config
 const app = express();
-const proc = new Tunnel(config.PORT);
+const proc = new Tunnel(config.PORT.toString());
 const logger = new Log();
 const http = new ConnectQAHTTP();
 
@@ -25,5 +25,5 @@ runInstance(proc);
 
 // Server
 app.listen(config.PORT, () => {
-  logger.info("Configuring listeners for incoming tests...");
+  logger.info("Configuring listeners for incoming tests...", false);
 });

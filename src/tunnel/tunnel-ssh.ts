@@ -10,15 +10,12 @@ export class Tunnel implements ConnectQATunnel {
   constructor(port: string = "3000") {
     _logger.clear();
     this._port = parseInt(port);
-    _logger.info("Generating a connection with connectQA server...");
+    _logger.info("Generating a connection with connectQA server...", false);
   }
 
   public async createTunnel(): Promise<TunnelResponse> {
     const tunnel: localtunnel.Tunnel = await localtunnel({
       port: this._port,
-    });
-    tunnel.on("request", (info) => {
-      _logger.info(`${info}`);
     });
     tunnel.on("error", async (err) => {
       _logger.error(`${err}`);
@@ -26,7 +23,7 @@ export class Tunnel implements ConnectQATunnel {
       this.retry();
     });
     tunnel.on("close", (info) => {
-      _logger.info(`${info}`);
+      _logger.info(`${info}`, true);
     });
     return {
       url: tunnel.url,
@@ -44,6 +41,6 @@ export class Tunnel implements ConnectQATunnel {
 
 export async function runInstance(tunnel: Tunnel): Promise<void> {
   const { url } = await tunnel.createTunnel();
-  _logger.info("Connection created successfully.");
+  _logger.info("Connection created successfully.", true);
   console.log(url);
 }
