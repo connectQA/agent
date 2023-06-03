@@ -40,9 +40,9 @@ export type UnknownError = BaseError<
   }
 >;
 
-export type FileNotReceivedError = BaseError<ErrorCode.FILE_NOT_RECEIVED, {}>;
+export type FileNotReceivedError = BaseError<ErrorCode.FILE_NOT_RECEIVED, unknown>;
 
-export type FileNotSavedError = BaseError<ErrorCode.FILE_NOT_SAVED, {}>;
+export type FileNotSavedError = BaseError<ErrorCode.FILE_NOT_SAVED, unknown>;
 
 export enum ErrorCode {
   SECRET_KEY_NOT_FOUND = "Secrey key is required",

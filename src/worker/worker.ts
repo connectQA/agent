@@ -15,7 +15,7 @@ export class ConnectQAWorker implements Worker {
 
   public async executeCode(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      exec("npm run exec", (error, stdout) => {
+      exec("npm run exec", (error) => {
         if (error) {
           reject(false);
         } else {

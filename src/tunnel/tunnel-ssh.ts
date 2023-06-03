@@ -7,7 +7,7 @@ const _logger: Log = new Log();
 export class Tunnel implements ConnectQATunnel {
   private readonly _port: number;
 
-  constructor(port: string = "3000") {
+  constructor(port = "3000") {
     _logger.clear();
     this._port = parseInt(port);
     _logger.info("Generating a connection with connectQA server...", false);
