@@ -11,8 +11,8 @@ export class Report implements ConnectQAReport {
     this._logPath = path.join("logs", "process.log");
   }
 
-  public getPlaywrightReportAsString(): Buffer {
-    return fs.readFileSync(this._reportPath);
+  public getPlaywrightReportAsString(): string {
+    return fs.readFileSync(this._reportPath).toString();
   }
 
   public getLogsAsString(): string[] {

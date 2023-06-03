@@ -25,14 +25,11 @@ export function goController() {
           });
         }
         if (await worker.executeCode()) {
-          const testResult: any = report.getPlaywrightReportAsString();
+          const testResult: string = report.getPlaywrightReportAsString();
           const result: ConnectQAAgentResponse = {
             result: JSON.parse(testResult),
             logs: report.getLogsAsString(),
-            datetime: new Date()
-              .toISOString()
-              .replace(/T/, " ")
-              .replace(/\..+/, ""),
+            datetime: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
           };
           res.json({
             result,

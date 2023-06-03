@@ -1,3 +1,3 @@
 export interface ConnectQAReport {
-  getPlaywrightReportAsString(): Buffer;
+  getPlaywrightReportAsString(): string;
 }

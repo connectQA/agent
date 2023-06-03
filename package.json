@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc && node ./dist/index.js",
     "exec": "npx playwright test index.spec.ts --project=chromium --headed",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint **/*.ts"
   },
   "repository": {
     "type": "git",
