@@ -31,9 +31,7 @@ export function goController() {
             logs: report.getLogsAsString(),
             datetime: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
           };
-          res.json({
-            result,
-          });
+          res.json(result);
         } else {
           res.status(500).send();
         }
