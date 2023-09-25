@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { ConnectQAReport } from "../types/report";
+import { ConnectQAReport } from "../types/report.js";
 
 export class Report implements ConnectQAReport {
   private readonly _reportPath: string;

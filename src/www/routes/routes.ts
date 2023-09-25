@@ -1,6 +1,6 @@
 import { Application } from "express";
-import { goController } from "../controllers/go-controller";
-import { ConnectQAWorker } from "../../worker/worker";
+import { goController } from "../controllers/go-controller.js";
+import { ConnectQAWorker } from "../../worker/worker.js";
 
 const handler = new ConnectQAWorker().fileHandler();
 

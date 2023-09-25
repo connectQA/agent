@@ -1,6 +1,6 @@
 import localtunnel from "localtunnel";
-import { ConnectQATunnel, TunnelResponse } from "../types/tunnel";
-import { Log } from "../utils/logger";
+import { ConnectQATunnel, TunnelResponse } from "../types/tunnel.js";
+import { Log } from "../utils/logger.js";
 
 const _logger: Log = new Log();
 

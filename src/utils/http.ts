@@ -1,9 +1,9 @@
 import axios from "axios";
-import { config } from "../../connectqa.config";
-import { Log } from "./logger";
-import { ConnectQAError } from "./connectQA-error";
-import { ErrorCode } from "../types/error";
-import { HTTPHandler } from "../types/http";
+import { config } from "../../connectqa.config.js";
+import { Log } from "./logger.js";
+import { ConnectQAError } from "./connectQA-error.js";
+import { ErrorCode } from "../types/error.js";
+import { HTTPHandler } from "../types/http.js";
 
 export class ConnectQAHTTP implements HTTPHandler {
   private readonly _connectQAServer: string;

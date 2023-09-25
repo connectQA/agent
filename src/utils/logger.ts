@@ -1,7 +1,7 @@
-import { ConnectQALogger } from "../types/logger";
+import { ConnectQALogger } from "../types/logger.js";
 import fs from "fs";
 import path from "path";
-import { pathExistsOrCreate } from "./folder";
+import { pathExistsOrCreate } from "./folder.js";
 
 export class Log implements ConnectQALogger {
   private readonly _writer: fs.WriteStream;

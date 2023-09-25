@@ -2,9 +2,9 @@ import fs from "fs";
 import path from "path";
 import multer from "multer";
 import { exec } from "child_process";
-import { Worker } from "../types/worker";
-import { ConnectQAError } from "../utils/connectQA-error";
-import { ErrorCode } from "../types/error";
+import { Worker } from "../types/worker.js";
+import { ConnectQAError } from "../utils/connectQA-error.js";
+import { ErrorCode } from "../types/error.js";
 
 export class ConnectQAWorker implements Worker {
   private readonly _dir: string = "tmp";

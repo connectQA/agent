@@ -1,10 +1,10 @@
 import fs from "fs";
 import { Request, Response } from "express";
-import { ErrorCode } from "../../types/error";
-import { ConnectQAWorker } from "../../worker/worker";
-import { ConnectQAError } from "../../utils/connectQA-error";
-import { Report } from "../../report/report";
-import { ConnectQAAgentResponse } from "../../types/response";
+import { ErrorCode } from "../../types/error.js";
+import { ConnectQAWorker } from "../../worker/worker.js";
+import { ConnectQAError } from "../../utils/connectQA-error.js";
+import { Report } from "../../report/report.js";
+import { ConnectQAAgentResponse } from "../../types/response.js";
 
 export function goController() {
   const worker = new ConnectQAWorker();
