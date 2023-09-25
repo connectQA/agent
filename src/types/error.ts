@@ -13,7 +13,7 @@ export interface BaseError<T, V> {
 
 export type InvalidApiKeyError = BaseError<
   ErrorCode.INVALID_API_KEY,
-  { apiKey: string | undefined }
+  { accountId: string | undefined; token: string | undefined }
 >;
 
 export type SecretKeyNotFoundError = BaseError<

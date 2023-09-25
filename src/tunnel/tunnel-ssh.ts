@@ -41,6 +41,6 @@ export class Tunnel implements ConnectQATunnel {
 
 export async function runInstance(tunnel: Tunnel): Promise<void> {
   const { url } = await tunnel.createTunnel();
-  _logger.info("Connection created successfully.", true);
-  console.log(url);
+  _logger.info("Configuring listeners for incoming tests...", true);
+  _logger.info(url, true);
 }
