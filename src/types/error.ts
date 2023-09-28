@@ -4,7 +4,8 @@ export type ErrorParams =
   | UndefinedAPIKeyError
   | FileNotReceivedError
   | FileNotFoundError
-  | UnknownError;
+  | UnknownError
+  | TunnelCreationError;
 
 export interface BaseError<T, V> {
   code: T;
@@ -40,6 +41,13 @@ export type UnknownError = BaseError<
   }
 >;
 
+export type TunnelCreationError = BaseError<
+  ErrorCode.TUNNEL_CREATION_ERROR,
+  {
+    status: number;
+  }
+>;
+
 export type FileNotReceivedError = BaseError<ErrorCode.FILE_NOT_RECEIVED, unknown>;
 
 export type FileNotSavedError = BaseError<ErrorCode.FILE_NOT_SAVED, unknown>;
@@ -52,4 +60,5 @@ export enum ErrorCode {
   FILE_NOT_SAVED = "Internal error. The file could not be saved.",
   FILE_NOT_FOUND = "File could not be found for further deletion process.",
   UNKNOWN_ERROR = "Something went wrong.",
+  TUNNEL_CREATION_ERROR = "Tunnel register failed.",
 }

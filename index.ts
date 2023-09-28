@@ -1,5 +1,5 @@
 import express from "express";
-import inquirer, { Answers } from "inquirer";
+import inquirer, { QuestionCollection } from "inquirer";
 import { Token } from "./token/index.js";
 import { Log } from "./src/utils/logger.js";
 import { Tunnel, runInstance } from "./src/tunnel/tunnel-ssh.js";
@@ -26,19 +26,32 @@ routesProvider(app);
 // Process
 pathExistsOrCreate("tmp");
 
+// Recursive prompt handler
+const promptHandler = (isARetry: boolean) => {
+  if (isARetry) {
+    logger.error("Incorrect client ID or token.");
+    logger.error("Make sure this value corresponds to your token from your profile.");
+  }
+  inquirer.prompt(tokenRegister).then(async ({ accountId, token }) => {
+    logger.info("Validating token...", true);
+    const response = await http.validateToken(accountId, token);
+    if (response) {
+      tokenValidator.setToken(token);
+      return start();
+    } else {
+      return promptHandler(true);
+    }
+  });
+};
+
 // Run cli
 console.clear();
 console.log("************** ConnectQA Agent **************");
-console.log("An open source no-code automated testing tool.");
-console.log("Let's register this machine with your account info.\n");
+console.log("An open source no-code automated testing tool.\n");
 const { key } = tokenValidator.isTokenDefined();
 if (!key) {
   try {
-    inquirer.prompt(tokenRegister).then(async ({ accountId, token }) => {
-      logger.info("Validating token...", true);
-      const response = await http.validateToken(accountId, token);
-      if (response) start();
-    });
+    promptHandler(false);
   } catch (error) {
     logger.error(`${error}`);
   }
@@ -49,9 +62,8 @@ if (!key) {
         start();
         break;
       case 2:
-        start();
-      case 3:
-        start();
+        tokenValidator.deleteToken();
+        promptHandler(false);
       default:
         break;
     }

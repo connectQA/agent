@@ -19,4 +19,8 @@ export class Token {
       return false;
     }
   }
+
+  public deleteToken(): void {
+    this._conf.delete("token");
+  }
 }

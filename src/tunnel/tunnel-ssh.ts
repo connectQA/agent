@@ -1,8 +1,10 @@
 import localtunnel from "localtunnel";
 import { ConnectQATunnel, TunnelResponse } from "../types/tunnel.js";
 import { Log } from "../utils/logger.js";
+import { ConnectQAHTTP } from "../www/requests/http.js";
 
 const _logger: Log = new Log();
+const _http: ConnectQAHTTP = new ConnectQAHTTP();
 
 export class Tunnel implements ConnectQATunnel {
   private readonly _port: number;
@@ -20,7 +22,7 @@ export class Tunnel implements ConnectQATunnel {
     tunnel.on("error", async (err) => {
       _logger.error(`${err}`);
       _logger.error(`Reconnecting...`);
-      this.retry();
+      this.createTunnel();
     });
     tunnel.on("close", (info) => {
       _logger.info(`${info}`, true);
@@ -33,14 +35,10 @@ export class Tunnel implements ConnectQATunnel {
   public closeTunnel(tunnel: localtunnel.Tunnel): void {
     tunnel.close();
   }
-
-  private async retry(): Promise<void> {
-    await runInstance(this);
-  }
 }
 
 export async function runInstance(tunnel: Tunnel): Promise<void> {
   const { url } = await tunnel.createTunnel();
   _logger.info("Configuring listeners for incoming tests...", true);
-  _logger.info(url, true);
+  await _http.registerTunnel(url);
 }
