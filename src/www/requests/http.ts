@@ -12,7 +12,7 @@ export class ConnectQAHTTP {
       accountId,
       token,
     });
-    const { isValid, current } = result.data;
+    const { isValid } = result.data;
     if (!isValid) {
       throw new ConnectQAError({
         code: ErrorCode.INVALID_API_KEY,
@@ -22,14 +22,6 @@ export class ConnectQAHTTP {
         },
       });
     }
-    if (!current) {
-      return await this.refresh();
-    }
-    return true;
-  }
-
-  public async refresh(): Promise<boolean> {
-    this.logger.info("Refreshing token...", false);
     return true;
   }
 

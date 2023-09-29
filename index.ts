@@ -1,5 +1,5 @@
 import express from "express";
-import inquirer, { QuestionCollection } from "inquirer";
+import inquirer from "inquirer";
 import { Token } from "./token/index.js";
 import { Log } from "./src/utils/logger.js";
 import { Tunnel, runInstance } from "./src/tunnel/tunnel-ssh.js";
@@ -49,6 +49,7 @@ console.clear();
 console.log("************** ConnectQA Agent **************");
 console.log("An open source no-code automated testing tool.\n");
 const { key } = tokenValidator.isTokenDefined();
+logger.info(`${tokenValidator.value}`, false);
 if (!key) {
   try {
     promptHandler(false);

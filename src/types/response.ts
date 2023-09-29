@@ -3,3 +3,8 @@ export type ConnectQAAgentResponse = {
   result: object;
   logs: string[];
 };
+
+export type HostDetails = {
+  hostname: string;
+  os: string;
+};

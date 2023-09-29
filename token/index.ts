@@ -23,4 +23,8 @@ export class Token {
   public deleteToken(): void {
     this._conf.delete("token");
   }
+
+  public get value() {
+    return this._conf.get("token");
+  }
 }
