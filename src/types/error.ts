@@ -4,7 +4,8 @@ export type ErrorParams =
   | UndefinedAPIKeyError
   | FileNotReceivedError
   | FileNotFoundError
-  | UnknownError;
+  | UnknownError
+  | TunnelCreationError;
 
 export interface BaseError<T, V> {
   code: T;
@@ -13,7 +14,7 @@ export interface BaseError<T, V> {
 
 export type InvalidApiKeyError = BaseError<
   ErrorCode.INVALID_API_KEY,
-  { apiKey: string | undefined }
+  { accountId: string | undefined; token: string | undefined }
 >;
 
 export type SecretKeyNotFoundError = BaseError<
@@ -40,9 +41,16 @@ export type UnknownError = BaseError<
   }
 >;
 
-export type FileNotReceivedError = BaseError<ErrorCode.FILE_NOT_RECEIVED, {}>;
+export type TunnelCreationError = BaseError<
+  ErrorCode.TUNNEL_CREATION_ERROR,
+  {
+    status: number;
+  }
+>;
 
-export type FileNotSavedError = BaseError<ErrorCode.FILE_NOT_SAVED, {}>;
+export type FileNotReceivedError = BaseError<ErrorCode.FILE_NOT_RECEIVED, unknown>;
+
+export type FileNotSavedError = BaseError<ErrorCode.FILE_NOT_SAVED, unknown>;
 
 export enum ErrorCode {
   SECRET_KEY_NOT_FOUND = "Secrey key is required",
@@ -52,4 +60,5 @@ export enum ErrorCode {
   FILE_NOT_SAVED = "Internal error. The file could not be saved.",
   FILE_NOT_FOUND = "File could not be found for further deletion process.",
   UNKNOWN_ERROR = "Something went wrong.",
+  TUNNEL_CREATION_ERROR = "Tunnel register failed.",
 }

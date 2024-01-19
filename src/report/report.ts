@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { ConnectQAReport } from "../types/report";
+import { ConnectQAReport } from "../types/report.js";
 
 export class Report implements ConnectQAReport {
   private readonly _reportPath: string;
@@ -11,11 +11,12 @@ export class Report implements ConnectQAReport {
     this._logPath = path.join("logs", "process.log");
   }
 
-  public getPlaywrightReportAsString(): Buffer {
-    return fs.readFileSync(this._reportPath);
+  public getPlaywrightReportAsJSON(): any {
+    const report: string = fs.readFileSync(this._reportPath).toString();
+    return JSON.parse(report);
   }
 
-  public getLogsAsString(): string[] {
-    return fs.readFileSync(this._logPath).toString().split("\n");
+  public getLogs(): string[] {
+    return fs.readFileSync(this._logPath).toString().split("\n").slice(0, -1);
   }
 }

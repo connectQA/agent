@@ -1,12 +1,12 @@
-import { ConnectQALogger } from "../types/logger";
 import fs from "fs";
 import path from "path";
-import { pathExistsOrCreate } from "./folder";
+import { pathExistsOrCreate } from "./folder.js";
+import { ConnectQALogger } from "../types/logger.js";
 
 export class Log implements ConnectQALogger {
   private readonly _writer: fs.WriteStream;
   private readonly _pathToLogFile: string;
-  private _logger: string = "";
+  private _logger = "";
 
   constructor() {
     pathExistsOrCreate("logs");
@@ -28,12 +28,7 @@ export class Log implements ConnectQALogger {
 
   public clear(): void {
     this._logger = "";
-    fs.writeFile(this._pathToLogFile, "", () => {});
-  }
-
-  public fromLogToJSON(): unknown {
-    // TODO
-    return;
+    fs.writeFile(this._pathToLogFile, "", () => undefined);
   }
 
   private getFormattedUTCDate(): string {
