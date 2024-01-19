@@ -11,11 +11,12 @@ export class Report implements ConnectQAReport {
     this._logPath = path.join("logs", "process.log");
   }
 
-  public getPlaywrightReportAsString(): string {
-    return fs.readFileSync(this._reportPath).toString();
+  public getPlaywrightReportAsJSON(): any {
+    const report: string = fs.readFileSync(this._reportPath).toString();
+    return JSON.parse(report);
   }
 
-  public getLogsAsString(): string[] {
-    return fs.readFileSync(this._logPath).toString().split("\n");
+  public getLogs(): string[] {
+    return fs.readFileSync(this._logPath).toString().split("\n").slice(0, -1);
   }
 }

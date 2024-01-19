@@ -6,12 +6,13 @@ import { Tunnel, runInstance } from "./src/tunnel/tunnel-ssh.js";
 import { routesProvider } from "./src/www/routes/routes.js";
 import { pathExistsOrCreate } from "./src/utils/folder.js";
 import { tokenRegister, menu } from "./cli/index.js";
-import { config } from "./connectqa.config.js";
 import { ConnectQAHTTP } from "./src/www/requests/http.js";
+import * as dotenv from "dotenv";
 
 // Config
+dotenv.config();
 const app = express();
-const proc = new Tunnel(config.PORT.toString());
+const proc = new Tunnel(process.env.PORT);
 const logger = new Log();
 const tokenValidator = new Token();
 const http = new ConnectQAHTTP();
@@ -30,7 +31,9 @@ pathExistsOrCreate("tmp");
 const promptHandler = (isARetry: boolean) => {
   if (isARetry) {
     logger.error("Incorrect client ID or token.");
-    logger.error("Make sure this value corresponds to your token from your profile.");
+    logger.error(
+      "Make sure this value corresponds to your token from your profile."
+    );
   }
   inquirer.prompt(tokenRegister).then(async ({ accountId, token }) => {
     logger.info("Validating token...", true);
@@ -49,7 +52,9 @@ console.clear();
 console.log("************** ConnectQA Agent **************");
 console.log("An open source no-code automated testing tool.\n");
 const { key } = tokenValidator.isTokenDefined();
-logger.info(`${tokenValidator.value}`, false);
+tokenValidator.value
+  ? logger.info(`Token: ${tokenValidator.value}`, false)
+  : null;
 if (!key) {
   try {
     promptHandler(false);
@@ -71,10 +76,10 @@ if (!key) {
   });
 }
 
-const start = () => {
+const start = async () => {
   logger.info("Starting the application...", true);
-  runInstance(proc);
-  app.listen(config.PORT, () => {
-    logger.info("Connection created successfully.", true);
+  await runInstance(proc);
+  app.listen(process.env.PORT, () => {
+    logger.info("Connection created successfully. Enjoy testing!", true);
   });
 };

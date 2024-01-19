@@ -1,7 +1,6 @@
 # ConnectQA Agent
 
 The repository for the ConnectQA runner agent. Built in TypeScript.<br>
-Run it as a Docker container.
 
 ## Architecture
 

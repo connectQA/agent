@@ -1,4 +1,5 @@
 export type ConnectQAAgentResponse = {
+  id: string;
   datetime: string;
   result: object;
   logs: string[];

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { config } from "../../../connectqa.config.js";
 import { ConnectQAError } from "../../utils/connectQA-error.js";
 import { ErrorCode } from "../../types/error.js";
 import { Log } from "../../utils/logger.js";
@@ -7,13 +6,20 @@ import { Log } from "../../utils/logger.js";
 export class ConnectQAHTTP {
   logger = new Log();
 
-  public async validateToken(accountId: string, token: string): Promise<boolean> {
-    const result = await axios.post(`${config.CONNECTQA_SERVER}/validate`, {
-      accountId,
-      token,
-    });
+  public async validateToken(
+    accountId: string,
+    token: string
+  ): Promise<boolean> {
+    const result = await axios.post(
+      `${process.env.CONNECTQA_SERVER}/validate`,
+      {
+        accountId,
+        token,
+      }
+    );
     const { isValid } = result.data;
     if (!isValid) {
+      this.logger.error(ErrorCode.INVALID_API_KEY);
       throw new ConnectQAError({
         code: ErrorCode.INVALID_API_KEY,
         params: {
@@ -27,7 +33,7 @@ export class ConnectQAHTTP {
 
   public async registerTunnel(url: string): Promise<void> {
     await axios
-      .post(`${config.CONNECTQA_SERVER}/register`, {
+      .post(`${process.env.CONNECTQA_SERVER}/register`, {
         url,
       })
       .then((result) => {
