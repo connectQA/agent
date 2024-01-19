@@ -5,7 +5,7 @@ import { Log } from "./src/utils/logger.js";
 import { Tunnel, runInstance } from "./src/tunnel/tunnel-ssh.js";
 import { routesProvider } from "./src/www/routes/routes.js";
 import { pathExistsOrCreate } from "./src/utils/folder.js";
-import { tokenRegister, menu } from "./cli/index.js";
+import { tokenRegister, menu } from "./src/cli/index.js";
 import { ConnectQAHTTP } from "./src/www/requests/http.js";
 import * as dotenv from "dotenv";
 
