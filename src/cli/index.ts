@@ -1,5 +1,5 @@
 import { QuestionCollection } from "inquirer";
-import { menuHandler } from "../src/utils/menu.js";
+import { menuHandler } from "../utils/menu.js";
 
 export const tokenRegister: QuestionCollection = [
   {
