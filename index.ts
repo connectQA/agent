@@ -1,6 +1,6 @@
 import express from "express";
 import inquirer from "inquirer";
-import { Token } from "./token/index.js";
+import { Token } from "./src/token/index.js";
 import { Log } from "./src/utils/logger.js";
 import { Tunnel, runInstance } from "./src/tunnel/tunnel-ssh.js";
 import { routesProvider } from "./src/www/routes/routes.js";
