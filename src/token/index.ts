@@ -4,7 +4,7 @@ export class Token {
   private readonly _conf: Conf;
 
   constructor() {
-    this._conf = new Conf({ projectName: "connectQA" });
+    this._conf = new Conf({ projectName: "ConnectQA" });
   }
 
   public isTokenDefined() {
