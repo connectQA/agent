@@ -12,7 +12,7 @@ export class Tunnel implements ConnectQATunnel {
   constructor(port = "3000") {
     _logger.clear();
     this._port = parseInt(port);
-    _logger.info("Generating a connection with connectQA server...", false);
+    _logger.info("Generating a connection with ConnectQA server...", false);
   }
 
   public async createTunnel(): Promise<TunnelResponse> {

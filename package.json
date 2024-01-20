@@ -1,7 +1,7 @@
 {
   "name": "agent",
   "version": "0.0.1",
-  "description": "The Connect QA runner agent.",
+  "description": "The ConnectQA runner agent.",
   "exports": "./index.js",
   "type": "module",
   "engines": {
@@ -17,7 +17,7 @@
     "url": "git+https://github.com/connectQA/agent.git"
   },
   "keywords": [
-    "connectQA",
+    "ConnectQA",
     "agent",
     "automation",
     "tests"
