@@ -15,6 +15,14 @@ When you develop the flows, they will be sent to the ConnectQA server where, onc
 
 This in turn allows you to run your tests using your computing power, making this process free forever.
 
+### Environment variables (.env)
+
+```
+CONNECTQA_SERVER= ConnectQA server URL.
+PORT= Port number enabled for this agent.
+
+```
+
 ## How to collaborate?
 
 Please feel free to make any contribution you wish. There are not many free no-code testing tools in the world and our goal is to change that. You can send your PR and we will gladly review it together.
