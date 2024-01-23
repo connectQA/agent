@@ -20,7 +20,7 @@ export function goController() {
             params: {},
           });
         }
-        if (!fs.existsSync("tmp/index.spec.js")) {
+        if (!fs.existsSync("tmp/target.spec.js")) {
           throw new ConnectQAError({
             code: ErrorCode.FILE_NOT_RECEIVED,
             params: {},
@@ -52,6 +52,7 @@ export function goController() {
           res.status(500).send();
         }
       } catch (error) {
+        console.log(error);
         throw new ConnectQAError({
           code: ErrorCode.UNKNOWN_ERROR,
           params: {

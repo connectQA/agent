@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start": "tsc && node ./dist/index.js",
-    "exec": "npx playwright test index.spec.js --project=chromium",
-    "exec-headed": "npx playwright test index.spec.js --project=chromium --headed"
+    "exec": "npx playwright test target.spec.js --project=chromium",
+    "exec-headed": "npx playwright test target.spec.js --project=chromium --headed"
   },
   "repository": {
     "type": "git",
