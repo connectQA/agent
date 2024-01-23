@@ -5,7 +5,7 @@ The repository for the ConnectQA runner agent. Built in TypeScript.<br>
 ## Architecture
 
 This schematic represents the basic flows that the ConnectQA agent deals with.
-![Architecture](static/arch.png)
+![Architecture](docs/arch.png)
 
 ## How it works?
 
