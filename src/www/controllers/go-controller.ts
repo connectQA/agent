@@ -1,4 +1,3 @@
-import fs from "fs";
 import { Request, Response } from "express";
 import { ErrorCode } from "../../types/error.js";
 import { ConnectQAWorker } from "../../worker/worker.js";
@@ -14,18 +13,14 @@ export function goController() {
   return {
     async go(req: Request, res: Response) {
       try {
-        if (!req.file) {
+        if (!req.body.instructions) {
           throw new ConnectQAError({
-            code: ErrorCode.FILE_NOT_RECEIVED,
+            code: ErrorCode.INSTRUCTIONS_NOT_FOUND,
             params: {},
           });
         }
-        if (!fs.existsSync("tmp/target.spec.js")) {
-          throw new ConnectQAError({
-            code: ErrorCode.FILE_NOT_RECEIVED,
-            params: {},
-          });
-        }
+        await worker.clearTargetFile();
+        await worker.writeCodeToTargetFile(req.body.instructions);
         if (await worker.executeCode(req.body.type)) {
           const result: any = report.getPlaywrightReportAsJSON();
           const errors: any = result.errors;

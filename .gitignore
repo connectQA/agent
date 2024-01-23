@@ -3,7 +3,6 @@ node_modules/
 /playwright/.cache/
 /dist/
 /out/
-/tmp/
 /logs/
 .env
 .todo
