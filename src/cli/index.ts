@@ -8,9 +8,10 @@ export const tokenRegister: QuestionCollection = [
     message: "Account ID:",
   },
   {
-    type: "input",
+    type: "password",
     name: "token",
     message: "Token:",
+    mask: "*",
   },
 ];
 

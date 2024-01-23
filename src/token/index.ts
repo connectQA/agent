@@ -8,11 +8,15 @@ export class Token {
   }
 
   public isTokenDefined() {
-    return { key: this._conf.get("token", null) };
+    return {
+      accountId: this._conf.get("accountId", null),
+      key: this._conf.get("token", null),
+    };
   }
 
-  public setToken(token: string): boolean {
+  public setData(accountId: string, token: string): boolean {
     try {
+      this._conf.set("accountId", accountId);
       this._conf.set("token", token);
       return true;
     } catch {
@@ -20,11 +24,16 @@ export class Token {
     }
   }
 
-  public deleteToken(): void {
+  public deleteData(): void {
+    this._conf.delete("accountId");
     this._conf.delete("token");
   }
 
-  public get value() {
+  public get token() {
     return this._conf.get("token");
+  }
+
+  public get accountId() {
+    return this._conf.get("accountId");
   }
 }

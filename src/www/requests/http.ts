@@ -10,30 +10,36 @@ export class ConnectQAHTTP {
     accountId: string,
     token: string
   ): Promise<boolean> {
-    const result = await axios.post(
-      `${process.env.CONNECTQA_SERVER}/validate`,
-      {
-        accountId,
-        token,
-      }
-    );
-    const { isValid } = result.data;
-    if (!isValid) {
-      this.logger.error(ErrorCode.INVALID_API_KEY);
-      throw new ConnectQAError({
-        code: ErrorCode.INVALID_API_KEY,
-        params: {
+    try {
+      const result = await axios.post(
+        `${process.env.CONNECTQA_SERVER}/validate`,
+        {
           accountId,
           token,
-        },
-      });
+        }
+      );
+      const { isValid } = result.data;
+      if (!isValid) {
+        this.logger.error(ErrorCode.INVALID_API_KEY);
+        throw new ConnectQAError({
+          code: ErrorCode.INVALID_API_KEY,
+          params: {
+            accountId,
+            token,
+          },
+        });
+      }
+      return true;
+    } catch (error: any) {
+      console.error(error.message);
+      throw new Error();
     }
-    return true;
   }
 
-  public async registerTunnel(url: string): Promise<void> {
+  public async registerTunnel(url: string, accountId: string): Promise<void> {
     await axios
       .post(`${process.env.CONNECTQA_SERVER}/register`, {
+        accountId,
         url,
       })
       .then((result) => {
@@ -57,6 +63,4 @@ export class ConnectQAHTTP {
         });
       });
   }
-
-  public async getConfig() {}
 }

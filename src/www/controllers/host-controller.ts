@@ -7,10 +7,10 @@ export function hostController() {
   return {
     async details(req: Request, res: Response) {
       try {
-        if (req.body.token != token.value) {
+        if (req.body.token != token.token) {
           res.status(401).send({
             exp: req.body.token,
-            cur: token.value,
+            cur: token.token,
           });
         } else res.json(details());
       } catch (error) {

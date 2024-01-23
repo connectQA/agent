@@ -39,8 +39,8 @@ const promptHandler = (isARetry: boolean) => {
     logger.info("Validating token...", true);
     const response = await http.validateToken(accountId, token);
     if (response) {
-      tokenValidator.setToken(token);
-      return start();
+      tokenValidator.setData(accountId, token);
+      return start(accountId);
     } else {
       return promptHandler(true);
     }
@@ -51,9 +51,9 @@ const promptHandler = (isARetry: boolean) => {
 console.clear();
 console.log("************** ConnectQA Agent **************");
 console.log("An open source no-code automated testing tool.\n");
-const { key } = tokenValidator.isTokenDefined();
-tokenValidator.value
-  ? logger.info(`Token: ${tokenValidator.value}`, false)
+const { key, accountId } = tokenValidator.isTokenDefined();
+tokenValidator.accountId
+  ? logger.info(`Account ID: ${tokenValidator.accountId}`, false)
   : null;
 if (!key) {
   try {
@@ -65,10 +65,10 @@ if (!key) {
   inquirer.prompt(menu).then(({ option }) => {
     switch (option) {
       case 1:
-        start();
+        start(accountId);
         break;
       case 2:
-        tokenValidator.deleteToken();
+        tokenValidator.deleteData();
         promptHandler(false);
       default:
         break;
@@ -76,9 +76,9 @@ if (!key) {
   });
 }
 
-const start = async () => {
+const start = async (accountId: any) => {
   logger.info("Starting the application...", true);
-  await runInstance(proc);
+  await runInstance(proc, accountId);
   app.listen(process.env.PORT, () => {
     logger.info("Connection created successfully. Enjoy testing!", true);
   });
