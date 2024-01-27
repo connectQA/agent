@@ -9,28 +9,25 @@ import { CodeParams } from "../types/code-params.js";
 const _logger = new Log();
 
 export class ConnectQAWorker implements Worker {
-  public async executeCode(type: any): Promise<boolean> {
+  public async executeCode(headed: boolean): Promise<boolean> {
     try {
       _logger.info("Executing tests...", true);
       return new Promise((resolve, reject) => {
-        exec(
-          `npm run ${type == "headed" ? "exec-headed" : "exec"}`,
-          (error: any) => {
-            if (error) {
-              reject(false);
-              _logger.error(error.message);
-              throw new ConnectQAError({
-                code: ErrorCode.FAILED_TEST_EXECUTION,
-                params: {
-                  error,
-                },
-              });
-            } else {
-              resolve(true);
-              this.clearTargetFile();
-            }
+        exec(`npm run ${headed ? "exec-headed" : "exec"}`, (error: any) => {
+          if (error) {
+            reject(false);
+            _logger.error(error.message);
+            throw new ConnectQAError({
+              code: ErrorCode.FAILED_TEST_EXECUTION,
+              params: {
+                error,
+              },
+            });
+          } else {
+            resolve(true);
+            this.clearTargetFile();
           }
-        );
+        });
       });
     } catch (error) {
       throw new ConnectQAError({

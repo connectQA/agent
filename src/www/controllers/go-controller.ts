@@ -21,7 +21,9 @@ export function goController() {
         }
         await worker.clearTargetFile();
         await worker.writeCodeToTargetFile(req.body.instructions);
-        if (await worker.executeCode(req.body.type)) {
+        const startedAt = new Date();
+        if (await worker.executeCode(req.body.headed)) {
+          const finishedAt = new Date();
           const result: any = report.getPlaywrightReportAsJSON();
           const errors: any = result.errors;
           logger.info(
@@ -35,19 +37,22 @@ export function goController() {
           }
           const testResult: ConnectQAAgentResponse = {
             id: req.body.id,
-            result,
-            logs: report.getLogs(),
-            datetime: new Date()
-              .toISOString()
-              .replace(/T/, " ")
-              .replace(/\..+/, ""),
+            success: errors.length == 0,
+            startedAt,
+            finishedAt,
+            result: {
+              logs: report.getLogs(),
+              run: result,
+            },
+            config: {
+              headed: req.body.headed,
+            },
           };
           res.json(testResult);
         } else {
           res.status(500).send();
         }
       } catch (error) {
-        console.log(error);
         throw new ConnectQAError({
           code: ErrorCode.UNKNOWN_ERROR,
           params: {
